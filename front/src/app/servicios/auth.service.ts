@@ -6,10 +6,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { User } from '../clases/user';
+import { IAuthServLogin } from './interfaces/IAuthServLogin';
+import { IAuthServRegistrarse } from './interfaces/iAuthServRegistrarse';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
   })
 };
 
@@ -20,7 +23,7 @@ export class AuthService {
 
   public currentUser: User | undefined;
   private readonly apiUrl = environment.apiUrl;
-  private registerUrl = this.apiUrl + '/auth//api/auth/registrarse';
+  private registerUrl = this.apiUrl + '/auth/registrarse';
   private loginUrl = this.apiUrl + '/auth/login';
   private meUrl = this.apiUrl + '/me';
 
@@ -29,16 +32,16 @@ export class AuthService {
     private router: Router
   ) { }
 
-  onRegistrarse(user: User): Observable<any> {
+  onRegistrarse(registrarse: IAuthServRegistrarse): Observable<any> {
     const request = JSON.stringify(
-      { name: user.name, email: user.email, password: user.password }
+      { name: registrarse.name, email: registrarse.email, password: registrarse.password }
     );
 
     return this.http.post(this.registerUrl, request, httpOptions);
   }
 
-  onLogin(user: User): Observable<User> {
-    const request = JSON.stringify({ email: user.email, password: user.password });
+  onLogin(login: IAuthServLogin): Observable<User> {
+    const request = JSON.stringify({ email: login.email, password: login.password });
 
     return this.http.post(this.loginUrl, request, httpOptions)
       .pipe(
@@ -46,7 +49,7 @@ export class AuthService {
           const token: string = response['access_token'];
           if (token) {
             this.setToken(token);
-            this.getUser().subscribe();
+            // this.getUser().subscribe();
           }
           return response;
         }),

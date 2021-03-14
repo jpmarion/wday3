@@ -1,0 +1,10 @@
+{
+  "FORMLOGIN": {
+    "lblUsuario": "User",
+    "lblContrasenia": "Password",
+    "btnIniciarSesion": "Login",
+    "btnRegistrarse":"Sign in",
+    "errorUsuarioRequired":"You must enter a value",
+    "errorUsuarioEmail":"Invalid email"
+  }
+}

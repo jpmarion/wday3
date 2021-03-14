@@ -1,0 +1,24 @@
+{
+  "FORMLOGIN": {
+    "lblUsuario": "Usuario",
+    "lblContrasenia": "Contraseña",
+    "btnIniciarSesion": "Iniciar sesión",
+    "btnRegistrarse": "Registrarse",
+    "errorUsuarioRequired": "Debe ingresar un valor",
+    "errorUsuarioEmail": "Email no valido",
+    "errorPasswordRequired": "Debe ingresar un valor",
+    "errorPasswordMinLength": "La contraseña debe contener a los sumo 8 caracteres"
+  },
+  "FORMREGISTER": {
+    "lblusuario": "Usuario",
+    "lblContrasenia": "Contraseña",
+    "errorLogin": "Usuario existente",
+    "btnRegistrate": "Registrate",
+    "tituloDialogOk": "Usuario creado con exito",
+    "mensajeDialogOk": "Confirmar e-mail de registro",
+    "errorUsuarioRequired": "Debe ingresar un valor",
+    "errorUsuarioEmail": "Email no valido",
+    "errorPasswordRequired": "Debe ingresar un valor",
+    "errorPasswordMinLength": "La contraseña debe contener a los sumo 8 caracteres"
+  }
+}

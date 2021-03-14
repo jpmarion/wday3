@@ -1,0 +1,8 @@
+{
+  "FORMLOGIN": {
+    "lblUsuario": "Do utilizador",
+    "lblContrasenia": "Senha",
+    "btnIniciarSesion": "Iniciar sessão",
+    "btnRegistrarse":"Check-in"
+  }
+}
