@@ -41,7 +41,7 @@ export class LoginComponent {
     this.authServices.onLogin(loginRequest)
       .subscribe(
         (response) => {
-          this.router.navigate(['home']);
+          this.router.navigate(['/home']);
         },
         (response) => {
           switch (response.status) {

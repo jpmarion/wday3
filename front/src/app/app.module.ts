@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthModule } from './pages/auth/auth.module';
+import { HomeModule } from './pages/home/home.module';
 import { HttpHandleErrorService } from './shared/services/http-handle-error.service';
 
 import { DialogModule } from './pages/shared/dialog/dialog.module';
@@ -28,10 +29,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     AuthModule,
+    HomeModule,
     AppRoutingModule,
     DialogModule,
     HttpClientModule,
@@ -46,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   exports:[
-    TranslateModule
+    TranslateModule,
   ],
   providers: [
     HttpHandleErrorService
