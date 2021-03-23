@@ -3,21 +3,21 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IOkDialogData } from './IOkDialogData';
 
 @Component({
-  selector: 'app-okdialog',
-  templateUrl: './okdialog.component.html',
-  styleUrls: ['./okdialog.component.scss']
+  selector: 'app-ok-dialog',
+  templateUrl: './ok-dialog.component.html',
+  styleUrls: ['./ok-dialog.component.scss']
 })
-export class OkdialogComponent implements OnInit {
+export class OkDialogComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<OkdialogComponent>,
+    public dialogRef: MatDialogRef<OkDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IOkDialogData
   ) { }
 
   ngOnInit(): void {
   }
 
-  ok() {
+  ok(): void {
     this.dialogRef.close();
   }
 

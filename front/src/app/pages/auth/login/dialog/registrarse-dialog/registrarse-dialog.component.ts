@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { OkdialogComponent } from 'src/app/pages/shared/dialog/okdialog/okdialog.component';
+import { OkDialogComponent } from 'src/app/pages/shared/dialog/ok-dialog/ok-dialog.component';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { IAuthServRegistrarse } from 'src/app/servicios/interfaces/iAuthServRegistrarse';
 
@@ -99,7 +99,8 @@ export class RegistrarseDialogComponent implements OnInit {
   }
 
   openOkDialog(titulo: string, mensaje: string) {
-    const dialogRef = this.dialogOk.open(OkdialogComponent, {
+
+    const dialogRef = this.dialogOk.open(OkDialogComponent, {
       data: { titulo: titulo, mensaje: mensaje }
     })
   }

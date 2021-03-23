@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OkDialogComponent } from './ok-dialog/ok-dialog.component';
 
-import { OkdialogComponent } from './okdialog/okdialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 import { TranslateModule } from '@ngx-translate/core';
+import { SinoDialogComponent } from './sino-dialog/sino-dialog.component';
+
 
 @NgModule({
-  declarations: [OkdialogComponent],
+  declarations: [OkDialogComponent, SinoDialogComponent],
   imports: [
     CommonModule,
+    MatCardModule,
+    MatButtonModule,
     TranslateModule
-  ],
-  exports: [
-    TranslateModule,
-    OkdialogComponent
   ]
 })
 export class DialogModule { }

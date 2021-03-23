@@ -13,7 +13,7 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">
+      <button mat-flat-button color="accent" [disabled]="!register.valid">
         {{ 'FORMREGISTER.btnRegistrate' | translate }}
         <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
       </button>

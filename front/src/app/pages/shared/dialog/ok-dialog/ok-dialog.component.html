@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ data.titulo | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ data.mensaje | translate }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-flat-button color="accent" (click)="ok()">Ok</button>
+  </mat-card-actions>
+</mat-card>
+

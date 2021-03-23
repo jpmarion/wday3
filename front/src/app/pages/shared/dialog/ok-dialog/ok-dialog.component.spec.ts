@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OkdialogComponent } from './okdialog.component';
+import { OkDialogComponent } from './ok-dialog.component';
 
-describe('OkdialogComponent', () => {
-  let component: OkdialogComponent;
-  let fixture: ComponentFixture<OkdialogComponent>;
+describe('OkDialogComponent', () => {
+  let component: OkDialogComponent;
+  let fixture: ComponentFixture<OkDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OkdialogComponent ]
+      declarations: [ OkDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OkdialogComponent);
+    fixture = TestBed.createComponent(OkDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

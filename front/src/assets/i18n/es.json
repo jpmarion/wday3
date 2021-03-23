@@ -20,5 +20,12 @@
     "errorUsuarioEmail": "Email no valido",
     "errorPasswordRequired": "Debe ingresar un valor",
     "errorPasswordMinLength": "La contraseña debe contener a los sumo 8 caracteres"
+  },
+  "NAV": {
+    "btnSalir": "Salir"
+  },
+  "FORMSINO": {
+    "btnSi": "Si",
+    "btnNo": "No"
   }
 }
