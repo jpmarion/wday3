@@ -63,7 +63,7 @@ export class AuthService {
       .pipe(
         tap(() => {
           localStorage.removeItem('token');
-          this.router.navigate(['/']);
+          this.router.navigate(['']);
         })
       );
   }

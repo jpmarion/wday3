@@ -22,7 +22,9 @@
     "errorPasswordMinLength": "La contraseña debe contener a los sumo 8 caracteres"
   },
   "NAV": {
-    "btnSalir": "Salir"
+    "btnSalir": "Salir",
+    "dataTituloSinoSalir":"Salir",
+    "dataMensajeSinoSalir":"¿Desea salir de WDA3?"
   },
   "FORMSINO": {
     "btnSi": "Si",

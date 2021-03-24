@@ -6,7 +6,7 @@
     <p>{{ data.mensaje | translate }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>{{ 'FORMSINO.btnSi' | translate }}</button>
-    <button mat-button>{{ 'FORMSINO.btnNo' | translate }}</button>
+    <button mat-button (click)="si()">{{ 'FORMSINO.btnSi' | translate }}</button>
+    <button mat-button (click)="no()">{{ 'FORMSINO.btnNo' | translate }}</button>
   </mat-card-actions>
 </mat-card>
