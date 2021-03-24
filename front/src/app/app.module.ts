@@ -9,13 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthModule } from './pages/auth/auth.module';
 import { HomeModule } from './pages/home/home.module';
-import { HttpHandleErrorService } from './shared/services/http-handle-error.service';
+
+import { HttpHandlerErrorService } from './shared/services/http-handler-error.service';
+import { HttpInterceptorService } from './shared/services/http-interceptor.service';
 
 import { DialogModule } from './pages/shared/dialog/dialog.module';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslationComponent } from './translation/translation.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,15 +44,20 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: (http: HttpClient) => {
           return new TranslateHttpLoader(http);
         },
-        deps: [ HttpClient ]
+        deps: [HttpClient]
       }
     })
   ],
-  exports:[
+  exports: [
     TranslateModule,
   ],
   providers: [
-    HttpHandleErrorService
+    HttpHandlerErrorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
