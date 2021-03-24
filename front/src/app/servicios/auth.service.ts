@@ -25,6 +25,7 @@ export class AuthService {
   private readonly apiUrl = environment.apiUrl;
   private registerUrl = this.apiUrl + '/auth/registrarse';
   private loginUrl = this.apiUrl + '/auth/login';
+  private loguotUrl = this.apiUrl + '/auth/logout';
   private meUrl = this.apiUrl + '/me';
 
   constructor(
@@ -54,6 +55,16 @@ export class AuthService {
           return response;
         }),
         catchError(error => this.handleError(error))
+      );
+  }
+
+  onLogout(): Observable<any> {
+    return this.http.get(this.loguotUrl, httpOptions)
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('token');
+          this.router.navigate(['/']);
+        })
       );
   }
 
