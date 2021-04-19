@@ -24,6 +24,19 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
+Route::group(['prefix' => 'empleado'], function () {
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('', 'App\Http\Controllers\API\EmpleadoController@store');
+        Route::get('showPorUsuario/{idUser}', 'App\Http\Controllers\API\EmpleadoController@showPorUsuario');
+        Route::get('', 'App\Http\Controllers\API\EmpleadoController@index');
+        Route::put('', 'App\Http\Controllers\API\EmpleadoController@update');
+        Route::get('/{id}','App\Http\Controllers\API\EmpleadoController@show');
+    });
+});
+
+
+
+
 Route::group(['prefix' => 'password'], function () {
     Route::post('create', 'App\Http\Controllers\API\PasswordResetController@create');
     Route::get('find/{token}', 'App\Http\Controllers\API\PasswordResetController@find');

@@ -119,6 +119,47 @@
                 ]
             }
         },
+        "/api/empleado": {
+            "post": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Crear empleado",
+                "operationId": "storeEmpleadoController",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmpleadoStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empleado creado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/password/create": {
             "post": {
                 "tags": [
@@ -192,6 +233,25 @@
                 },
                 "type": "object"
             },
+            "EmpleadoStoreRequest": {
+                "title": "EmpleadoStoreRequest",
+                "description": "Empleado Store Request",
+                "properties": {
+                    "user_id": {
+                        "description": "Id del usuario",
+                        "type": "integer"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "Nombre del empleado",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "PasswordResetCreateRequest": {
                 "title": "PasswordResetCreateRequest",
                 "description": "Password Reset Request",
@@ -200,6 +260,64 @@
                         "description": "Email del usuario",
                         "type": "string",
                         "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "Empleado": {
+                "title": "Empleado",
+                "description": "Empleado representation",
+                "properties": {
+                    "id": {
+                        "description": "Id del empleado",
+                        "type": "integer"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
+                        "type": "string"
+                    },
+                    "nombre": {
+                        "description": "Nombre del empleado",
+                        "type": "string"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "User",
+                "description": "Representación del usuario",
+                "properties": {
+                    "id": {
+                        "description": "Id del usuario",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre del usuario",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del usuario",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "email_verified_at": {
+                        "description": "Cuando el usuario verifica su email",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "active": {
+                        "description": "Si usuario se encuentra activo",
+                        "type": "boolean"
+                    },
+                    "empleados": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Empleado"
+                        }
                     }
                 },
                 "type": "object"

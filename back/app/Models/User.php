@@ -8,6 +8,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     title="User",
+ *     description="Representación del usuario",
+ *     @OA\Property(type="integer", property="id", description="Id del usuario"),
+ *     @OA\Property(type="string", property="name", description="Nombre del usuario"),
+ *     @OA\Property(type="string", property="email", format="email", description="Email del usuario"),
+ *     @OA\Property(type="string", format="date-time", property="email_verified_at", description="Cuando el usuario verifica su email", nullable=true),
+ *     @OA\Property(type="boolean", property="active", description="Si usuario se encuentra activo"),
+ *     @OA\Property(type="array", property="empleados",
+ *          @OA\Items(
+ *              type="object", ref="#/components/schemas/Empleado"
+ *          )
+ *      )
+ * )
+ */
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
@@ -46,4 +64,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class);
+    }
 }
