@@ -95,4 +95,14 @@ final class EmpleadoEntity implements IEmpleadoEntity
     {
         $this->error = $error;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'user_id' => $this->getUserId(),
+            'apellido' => $this->getApellido(),
+            'nombre' => $this->getNombre()
+        ];
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Resources\EmpleadoResource;
 use Exception;
 use Illuminate\Http\Request;
 use Src\empleado\application\AgregarEmpleadoCU;
+use Src\empleado\application\BuscarEmpleadoCU;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\empleado\infrastructure\EmpleadoEloquentRepo;
 
@@ -85,9 +86,54 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Get(
+     *      path="/api/empleado/{id}",
+     *      tags={"EmpleadoController"},
+     *      summary="Buscar un empleado",
+     *      operationId="empleadoShow",
+     *      security={{"bearerAuth":{}}},
+     *   @OA\Parameter(
+     *     name="id",
+     *     description="Id del empleado",
+     *     required=true,
+     *     in="path",
+     *       @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
     public function show($id)
     {
-        //
+        try {
+            $repository = new EmpleadoEloquentRepo();
+            $buscarEmpleado = new BuscarEmpleadoCU($repository);
+            $empleado = $buscarEmpleado($id);
+
+            return response()->json($empleado, 200);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**

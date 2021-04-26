@@ -44,12 +44,13 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
 
     public function show(int $id): EmpleadoEntity
     {
-        $empleadoORM = Empleado::findOrFail($id);
-
+        $empleadoORM =  $this->model->findOrFail($id);
         $empleado = new EmpleadoEntity();
-        $empleadoNew->setId($empleadoORM->id);
-        $empleadoNew->setApellido($empleadoORM->apellido);
-        $empleadoNew->setNombre($empleadoORM->nombre);
+        $empleado->setId($empleadoORM->id);
+        $empleado->setApellido($empleadoORM->apellido);
+        $empleado->setNombre($empleadoORM->nombre);
+        $empleado->setUserId($empleadoORM->user_id);
+
         return $empleado;
     }
 

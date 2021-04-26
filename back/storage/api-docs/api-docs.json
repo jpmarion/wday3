@@ -160,6 +160,48 @@
                 ]
             }
         },
+        "/api/empleado/{id}": {
+            "get": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Buscar un empleado",
+                "operationId": "empleadoShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id del empleado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/password/create": {
             "post": {
                 "tags": [
