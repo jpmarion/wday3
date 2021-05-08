@@ -30,6 +30,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
 
+    const ADMINSTRADOR = 1;
+
     protected $dates = ['deleted_at'];
 
     /**
@@ -68,5 +70,19 @@ class User extends Authenticatable
     public function empleados()
     {
         return $this->hasMany(Empleado::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function es_admin()
+    {
+        $es_admin = false;
+        if ($this->roles()->find(self::ADMINSTRADOR)) {
+            $es_admin = true;
+        }
+        return $es_admin;
     }
 }
