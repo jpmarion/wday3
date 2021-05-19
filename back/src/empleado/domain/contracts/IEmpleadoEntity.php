@@ -12,6 +12,6 @@ interface IEmpleadoEntity
     public function setApellido(string $apellido);
     public function getNombre(): string;
     public function setNombre(string $nombre);
-    public function getError(): string;
-    public function setError(string $error);
+    public function getEmail():string;
+    public function setEmail(string $email);    
 }

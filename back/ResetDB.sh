@@ -6,3 +6,5 @@ echo Crear Base de datos
 php artisan migrate
 echo Instalar Passport
 php artisan passport:install --force
+echo Crear Seeder
+php artisan db:seed

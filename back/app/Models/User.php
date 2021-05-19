@@ -31,8 +31,10 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
 
     const ADMINSTRADOR = 1;
+    const EMPLEADO = 2;
 
     protected $dates = ['deleted_at'];
+    protected $with = ['roles'];
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +44,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'apellido',
         'password',
         'active',
         'activation_token'
@@ -77,12 +80,21 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    public function es_admin()
+    public function esAdmin(): bool
     {
         $es_admin = false;
         if ($this->roles()->find(self::ADMINSTRADOR)) {
             $es_admin = true;
         }
         return $es_admin;
+    }
+
+    public function esEmpleado(): bool
+    {
+        $es_empleado = false;
+        if ($this->roles()->find(self::EMPLEADO)) {
+            $es_empleado = true;
+        }
+        return $es_empleado;
     }
 }

@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Notifications\SignupActivate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Src\usuario\application\RegistrarUserCU;
+use Src\usuario\domain\UsuarioEntity;
+use Src\usuario\infrastructure\UsuarioEloquentRepo;
 
 /**
  *  @OA\Info(
@@ -65,18 +68,17 @@ class AuthController extends Controller
      */
     public function registrarse(AuthRegistrarseRequest $request)
     {
-        $user = new User([
-            'name' => '',
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'activation_token' => bcrypt($request->email)
-        ]);
+        try {
+            $usuario = new UsuarioEntity();
+            $usuario->setEmail($request->email);
+            $usuario->setPassword($request->password);
 
-        $user->save();
-
-        $user->notify(new SignupActivate($user));
-
-        return response()->json(['msg' => 'Usuario creado con exito'], 201);
+            $usuarioRepo = new UsuarioEloquentRepo();
+            $registrarUserCU = new RegistrarUserCU($usuarioRepo);
+            $registrarUserCU($usuario);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmpleadoStoreRequest extends FormRequest
+class EmpleadoUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,20 @@ class EmpleadoStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required',
-            'apellido' => 'required',
+            'id' => 'required',
             'nombre' => 'required',
-            'email' => 'required'
+            'apellido' => 'required'
         ];
     }
 
     /**
      * @OA\Schema(
-     *     schema="EmpleadoStoreRequest",
-     *     title="EmpleadoStoreRequest",
-     *     description="Empleado Store Request",
-     *     @OA\Property(type="integer", property="user_id", description="Id del usuario"),
-     *     @OA\Property(type="string", property="apellido", description="Apellido del empleado"),
+     *     schema="EmpleadoUpdateRequest",
+     *     title="EmpleadoUpdateRequest",
+     *     description="Empleado Update Request",
+     *     @OA\Property(type="integer", property="id", description="Id del empleado"),
      *     @OA\Property(type="string", property="nombre", description="Nombre del empleado"),
-     *     @OA\Property(type="string", property="email", format="email", description="Email del empleado")
+     *     @OA\Property(type="string", property="apellido", description="Apellido del empleado")
      * )
      */
 }

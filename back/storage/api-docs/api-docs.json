@@ -120,6 +120,45 @@
             }
         },
         "/api/empleado": {
+            "put": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Modificar un empleado",
+                "operationId": "empleadoUpdate",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmpleadoUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Empleado modificado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "EmpleadoController"
@@ -178,6 +217,45 @@
                         }
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "EmpleadoController"
+                ],
+                "summary": "Eliminar un empleado",
+                "operationId": "empleadoDestroy",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmpleadoDestroyRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Empleado",
@@ -275,6 +353,17 @@
                 },
                 "type": "object"
             },
+            "EmpleadoDestroyRequest": {
+                "title": "EmpleadoDestroyRequest",
+                "description": "Empleado Destroy Request",
+                "properties": {
+                    "id": {
+                        "description": "Id del empleado",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "EmpleadoStoreRequest": {
                 "title": "EmpleadoStoreRequest",
                 "description": "Empleado Store Request",
@@ -289,6 +378,30 @@
                     },
                     "nombre": {
                         "description": "Nombre del empleado",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email del empleado",
+                        "type": "string",
+                        "format": "email"
+                    }
+                },
+                "type": "object"
+            },
+            "EmpleadoUpdateRequest": {
+                "title": "EmpleadoUpdateRequest",
+                "description": "Empleado Update Request",
+                "properties": {
+                    "id": {
+                        "description": "Id del empleado",
+                        "type": "integer"
+                    },
+                    "nombre": {
+                        "description": "Nombre del empleado",
+                        "type": "string"
+                    },
+                    "apellido": {
+                        "description": "Apellido del empleado",
                         "type": "string"
                     }
                 },

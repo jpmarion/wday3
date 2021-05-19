@@ -25,12 +25,13 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'empleado'], function () {
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api', 'admin']], function () {
         Route::post('', 'App\Http\Controllers\API\EmpleadoController@store');
         Route::get('showPorUsuario/{idUser}', 'App\Http\Controllers\API\EmpleadoController@showPorUsuario');
         Route::get('', 'App\Http\Controllers\API\EmpleadoController@index');
         Route::put('', 'App\Http\Controllers\API\EmpleadoController@update');
-        Route::get('/{id}','App\Http\Controllers\API\EmpleadoController@show');
+        Route::get('/{id}', 'App\Http\Controllers\API\EmpleadoController@show');
+        Route::delete('/{id}', 'App\Http\Controllers\API\EmpleadoController@destroy');
     });
 });
 

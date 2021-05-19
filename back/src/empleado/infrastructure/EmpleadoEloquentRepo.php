@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace Src\empleado\infrastructure;
 
 use App\Models\Empleado;
+use App\Models\Role;
+use App\Models\User;
 use Src\empleado\domain\contracts\IEmpleadosRepository;
 use Src\empleado\domain\EmpleadoCollection;
 use Src\empleado\domain\EmpleadoEntity;
 
 final class EmpleadoEloquentRepo implements IEmpleadosRepository
 {
-    private $model;
+    const EMPLEADO = 2;
 
     public function __construct()
     {
-        $this->model = new Empleado();
     }
 
     public function index(): EmpleadoCollection
@@ -35,30 +36,69 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
 
     public function store(EmpleadoEntity $empleado): void
     {
-        $empleadoStore = new Empleado();
-        $empleadoStore->apellido = $empleado->getApellido();
-        $empleadoStore->nombre = $empleado->getNombre();
-        $empleadoStore->user_id = $empleado->getUserId();
-        $empleadoStore->save();
+
+        $empleadoFind = User::where('email', $empleado->getEmail())->first();
+        if (!empty($empleadoFind)) {
+            $empleadoFind->apellido = $empleado->getApellido();
+            $empleadoFind->name = $empleado->getNombre();
+            $empleadoFind->user_id = $empleado->getUserId();
+            $empleadoFind->save();
+
+            $role = Role::find(self::EMPLEADO);
+            $empleadoFind->roles()->save($role);
+        } else {
+            $empleadoStore = new User();
+            $empleadoStore->apellido = $empleado->getApellido();
+            $empleadoStore->name = $empleado->getNombre();
+            $empleadoStore->user_id = $empleado->getUserId();
+            $empleadoStore->save();
+
+            $role = Role::find(self::EMPLEADO);
+            $empleadoStore->roles()->save($role);
+        }
     }
 
     public function show(int $id): EmpleadoEntity
     {
-        $empleadoORM =  $this->model->findOrFail($id);
+        $empleadoORM = User::whereHas('roles', function ($query) use ($id) {
+            $query->where('roles.id', self::EMPLEADO)
+                ->where('users.id', $id);
+        })->firstOrFail();
         $empleado = new EmpleadoEntity();
-        $empleado->setId($empleadoORM->id);
-        $empleado->setApellido($empleadoORM->apellido);
-        $empleado->setNombre($empleadoORM->nombre);
-        $empleado->setUserId($empleadoORM->user_id);
+
+        if ($empleadoORM->esEmpleado()) {
+            $empleado->setId($empleadoORM->id);
+            $empleado->setApellido($empleadoORM->apellido);
+            $empleado->setNombre($empleadoORM->name);
+            $empleado->setEmail($empleadoORM->email);
+            $empleado->setUserId($empleadoORM->user_id);
+        }
 
         return $empleado;
     }
 
     public function update(EmpleadoEntity $empleado): void
     {
-        $empleadoUpdate = Empleado::find($empleado->getId());
-        $empleadoUpdate->apellido = $empleado->getApellido();
-        $empleadoUpdate->nombre = $empleado->getNombre();
-        $empleadoUpdate->save();
+        $id = $empleado->getId();
+        $empleadoUpdate = User::whereHas('roles', function ($query) use ($id) {
+            $query->where('roles.id', self::EMPLEADO)
+                ->where('users.id', $id);
+        })->firstOrFail();
+
+        if ($empleadoUpdate->esEmpleado()) {
+            $empleadoUpdate->apellido = $empleado->getApellido();
+            $empleadoUpdate->name = $empleado->getNombre();
+            $empleadoUpdate->save();
+        }
+    }
+
+    public function delete(int $id): void
+    {
+        $empleadoDelete = User::whereHas('roles', function ($query) use ($id) {
+            $query->where('roles.id', self::EMPLEADO)
+                ->where('users.id', $id);
+        })->firstOrFail();
+
+        $empleadoDelete->roles()->detach(self::EMPLEADO);
     }
 }

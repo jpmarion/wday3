@@ -12,7 +12,7 @@ final class EmpleadoEntity implements IEmpleadoEntity
     private int $userId;
     private string $apellido;
     private string $nombre;
-    private string $error;
+    private string $email;
 
     /**
      * Get the value of id
@@ -79,21 +79,23 @@ final class EmpleadoEntity implements IEmpleadoEntity
     }
 
     /**
-     * Get the value of error
+     * Get the value of email
      */
-    public function getError(): string
+    public function getEmail(): string
     {
-        return $this->error;
+        return $this->email;
     }
 
     /**
-     * Set the value of error
+     * Set the value of email
      *
      * @return  self
      */
-    public function setError(string $error)
+    public function setEmail($email)
     {
-        $this->error = $error;
+        $this->email = $email;
+
+        return $this;
     }
 
     public function toArray()
@@ -102,7 +104,8 @@ final class EmpleadoEntity implements IEmpleadoEntity
             'id' => $this->getId(),
             'user_id' => $this->getUserId(),
             'apellido' => $this->getApellido(),
-            'nombre' => $this->getNombre()
+            'nombre' => $this->getNombre(),
+            'email' => $this->getEmail()
         ];
     }
 }

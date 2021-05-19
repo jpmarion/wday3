@@ -17,7 +17,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->es_admin()) {
+        if (!Auth::user()->esAdmin()) {
             abort(403, 'Acción no autorizada');
         }
         return $next($request);

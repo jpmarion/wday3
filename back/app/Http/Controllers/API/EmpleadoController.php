@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmpleadoDestroyRequest;
 use App\Http\Requests\EmpleadoStoreRequest;
-use App\Http\Resources\EmpleadoResource;
+use App\Http\Requests\EmpleadoUpdateRequest;
 use Exception;
-use Illuminate\Http\Request;
 use Src\empleado\application\AgregarEmpleadoCU;
 use Src\empleado\application\BuscarEmpleadoCU;
+use Src\empleado\application\ActualizarEmpleadoCU;
+use Src\empleado\application\EliminarEmpleadoCU;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\empleado\infrastructure\EmpleadoEloquentRepo;
 
@@ -64,20 +66,21 @@ class EmpleadoController extends Controller
      */
     public function store(EmpleadoStoreRequest $request)
     {
-        try {
-            $empleado = new EmpleadoEntity();
-            $empleado->setUserId($request->user_id);
-            $empleado->setApellido($request->apellido);
-            $empleado->setNombre($request->nombre);
+        // try {
+        $empleado = new EmpleadoEntity();
+        $empleado->setUserId($request->user_id);
+        $empleado->setApellido($request->apellido);
+        $empleado->setNombre($request->nombre);
+        $empleado->setEmail($request->email);
 
-            $repository = new EmpleadoEloquentRepo();
+        $repository = new EmpleadoEloquentRepo();
 
-            $agregarEmpleado = new AgregarEmpleadoCU($repository);
-            $agregarEmpleado($empleado);
-            return response()->json(['msg' => 'Empleado creado con exito'], 201);
-        } catch (Exception $e) {
-            return response()->json(['msg' => $e->getMessage()], 422);
-        }
+        $agregarEmpleado = new AgregarEmpleadoCU($repository);
+        $agregarEmpleado($empleado);
+        return response()->json(['msg' => 'Empleado creado con exito'], 201);
+        // } catch (Exception $e) {
+        //     return response()->json(['msg' => $e->getMessage()], 422);
+        // }
     }
 
     /**
@@ -143,9 +146,54 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    /**
+     * @OA\Put(
+     *      path="/api/empleado",
+     *      tags={"EmpleadoController"},
+     *      summary="Modificar un empleado",
+     *      operationId="empleadoUpdate",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/EmpleadoUpdateRequest")
+     *      ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado modificado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
+    public function update(EmpleadoUpdateRequest $request)
     {
-        //
+        try {
+            $empleado = new EmpleadoEntity();
+            $empleado->setId($request->id);
+            $empleado->setApellido($request->apellido);
+            $empleado->setNombre($request->nombre);
+
+            $repository = new EmpleadoEloquentRepo();
+            $actualizarEmpleado = new ActualizarEmpleadoCU($repository);
+            $actualizarEmpleado($empleado);
+
+            return response()->json(['msg' => 'Empleado modificado con exito'], 200);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**
@@ -154,8 +202,46 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /**
+     * @OA\Delete(
+     *      path="/api/empleado/{id}",
+     *      tags={"EmpleadoController"},
+     *      summary="Eliminar un empleado",
+     *      operationId="empleadoDestroy",
+     *      security={{"bearerAuth":{}}},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(ref="#/components/schemas/EmpleadoDestroyRequest")
+     *      ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleado",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
+    public function destroy(EmpleadoDestroyRequest $request)
     {
-        //
+        try {
+            $repository = new EmpleadoEloquentRepo();
+            $deleteEmpleado = new EliminarEmpleadoCU($repository);
+            $deleteEmpleado($request->id);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 }
