@@ -23,8 +23,10 @@
   },
   "NAV": {
     "btnSalir": "Salir",
-    "dataTituloSinoSalir":"Salir",
-    "dataMensajeSinoSalir":"¿Desea salir de WDA3?"
+    "dataTituloSinoSalir": "Salir",
+    "dataMensajeSinoSalir": "¿Desea salir de WDA3?",
+    "btnDatos": "Datos",
+    "btnEmpleados": "Empleados"
   },
   "FORMSINO": {
     "btnSi": "Si",

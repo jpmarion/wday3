@@ -1,6 +1,12 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Wday3</span>
+    <button mat-button [matMenuTriggerFor]="menu">{{ 'NAV.btnDatos' | translate }}</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="Empleados()" >
+        {{ 'NAV.btnEmpleados' | translate }}
+      </button>
+    </mat-menu>
     <span class="example-spacer"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
       <mat-icon>more_vert</mat-icon>

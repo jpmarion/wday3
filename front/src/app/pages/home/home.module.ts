@@ -11,9 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { EmpleadosComponent } from './empleados/empleados.component';
 
 @NgModule({
-  declarations: [HomeComponent, NavComponent],
+  declarations: [HomeComponent, NavComponent, EmpleadosComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,

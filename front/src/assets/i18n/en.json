@@ -3,8 +3,31 @@
     "lblUsuario": "User",
     "lblContrasenia": "Password",
     "btnIniciarSesion": "Login",
-    "btnRegistrarse":"Sign in",
-    "errorUsuarioRequired":"You must enter a value",
-    "errorUsuarioEmail":"Invalid email"
+    "btnRegistrarse": "Sign in",
+    "errorUsuarioRequired": "You must enter a value",
+    "errorUsuarioEmail": "Invalid email"
+  },
+  "FORMREGISTER": {
+    "lblusuario": "User",
+    "lblContrasenia": "Password",
+    "errorLogin": "Existing user",
+    "btnRegistrate": "Sign up",
+    "tituloDialogOk": "User created successfully",
+    "mensajeDialogOk": "Confirm registration email",
+    "errorUsuarioRequired": "You must enter a value",
+    "errorUsuarioEmail": "Invalid email",
+    "errorPasswordRequired": "You must enter a value",
+    "errorPasswordMinLength": "The password must contain at most 8 characters"
+  },
+  "NAV": {
+    "btnSalir": "Exit",
+    "dataTituloSinoSalir": "Exit",
+    "dataMensajeSinoSalir": "¿You want to quit WDA3?",
+    "btnDatos": "Data",
+    "btnEmpleados": "Employees"
+  },
+  "FORMSINO": {
+    "btnSi": "Si",
+    "btnNo": "No"
   }
 }

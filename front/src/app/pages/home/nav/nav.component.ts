@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { SinoDialogComponent } from '../../shared/dialog/sino-dialog/sino-dialog.component';
 
@@ -12,7 +13,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private sinoDialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -27,7 +29,10 @@ export class NavComponent implements OnInit {
       if (result) {
         this.authService.onLogout().subscribe();
       }
-
     });
+  }
+
+  Empleados(): void {
+    this.router.navigate(['home', { outlets: {  principalbar: ['empleados'] } }]);        
   }
 }
