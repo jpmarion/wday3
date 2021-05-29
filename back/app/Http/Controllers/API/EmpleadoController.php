@@ -10,6 +10,7 @@ use Exception;
 use Src\empleado\application\AgregarEmpleadoCU;
 use Src\empleado\application\BuscarEmpleadoCU;
 use Src\empleado\application\ActualizarEmpleadoCU;
+use Src\empleado\application\BuscarEmpleadosCU;
 use Src\empleado\application\EliminarEmpleadoCU;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\empleado\infrastructure\EmpleadoEloquentRepo;
@@ -21,9 +22,41 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Get(
+     *      path="/api/empleado",
+     *      tags={"EmpleadoController"},
+     *      summary="Muestra todos los empleados",
+     *      operationId="empleadoIndex",
+     *      security={{"bearerAuth":{}}},
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleados",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
     public function index()
     {
-        //
+        $repository = new EmpleadoEloquentRepo();
+        $buscarEmpleados = new BuscarEmpleadosCU($repository);
+        $empleados = $buscarEmpleados();
+
+        return response()->json($empleados, 200);
     }
 
     /**

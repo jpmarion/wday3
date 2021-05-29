@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -11,9 +11,10 @@ export class AppComponent {
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('es');
-    translate.addLangs(['en','br']);
+    translate.addLangs(['en', 'br']);
 
-    const browserLang =translate.getBrowserLang();
-    translate.use(browserLang.match(/en|br/)? browserLang:'es');
+    const browserLang = translate.getBrowserLang();
+    translate.use(browserLang.match(/en|br/) ? browserLang : 'es');
   }
+
 }

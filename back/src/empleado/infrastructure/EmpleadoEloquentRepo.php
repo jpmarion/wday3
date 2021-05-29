@@ -7,6 +7,7 @@ namespace Src\empleado\infrastructure;
 use App\Models\Empleado;
 use App\Models\Role;
 use App\Models\User;
+use ArrayObject;
 use Src\empleado\domain\contracts\IEmpleadosRepository;
 use Src\empleado\domain\EmpleadoCollection;
 use Src\empleado\domain\EmpleadoEntity;
@@ -21,15 +22,23 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
 
     public function index(): EmpleadoCollection
     {
-        $empleadoCollection = new EmpleadoCollection();
-        foreach (Empleado::all()->cursor() as $empleado) {
+        $empleadoORM = User::whereHas('roles', function ($query) {
+            $query->where('roles.id', self::EMPLEADO);
+        })->get();
+
+        $empleadoArrayObject = new ArrayObject();
+        foreach ($empleadoORM as $empleado) {
             $empleadoNew = new EmpleadoEntity();
             $empleadoNew->setId($empleado->id);
             $empleadoNew->setApellido($empleado->apellido);
-            $empleadoNew->setNombre($empleado->nombre);
+            $empleadoNew->setNombre($empleado->name);
+            $empleadoNew->setUserId($empleado->user_id);
+            $empleadoNew->setEmail($empleado->email);
 
-            $empleadoCollection->append($empleadoNew);
+            $empleadoArrayObject->append($empleadoNew);
         }
+
+        $empleadoCollection = new EmpleadoCollection($empleadoArrayObject);
 
         return $empleadoCollection;
     }

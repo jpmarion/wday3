@@ -9,6 +9,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { EmpleadosComponent } from './empleados/empleados.component';
@@ -22,6 +25,9 @@ import { EmpleadosComponent } from './empleados/empleados.component';
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
+    MatGridListModule,
+    MatInputModule,
+    MatTableModule,
     TranslateModule
   ]
 })

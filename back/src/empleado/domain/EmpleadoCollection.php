@@ -6,28 +6,23 @@ namespace Src\empleado\domain;
 
 use ArrayObject;
 
-final class EmpleadoCollection extends ArrayObject
+final class EmpleadoCollection
 {
-    public function __construct(EmpleadoEntity ...$empleadoEntity)
+
+    private ArrayObject $empleados;
+
+    public function __construct(ArrayObject $empleados)
     {
-        parent::__construct($empleadoEntity);
+        $this->empleados = $empleados;
     }
 
-    public function append($value)
+    public function toArray()
     {
-        if ($value instanceof EmpleadoEntity) {
-            parent::append($value);
-        } else {
-            throw new Exception("No se puede agregar una persona que no sea un", __CLASS__);
-        }
-    }
-
-    public function offsetSet($index, $newval)
-    {
-        if ($newval instanceof EmpleadoEntity) {
-            parent::offsetSet($index, $newval);
-        } else {
-            throw new Exception("No se puede agregar una persona que no sea un", __CLASS__);
-        }
+        $itarator = $this->empleados->getIterator();        
+        $empleadosArray = array();
+        foreach ($itarator as $key => $value) {        
+            array_push($empleadosArray, $value->toArray());
+        }    
+        return $empleadosArray;
     }
 }
