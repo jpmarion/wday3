@@ -52,11 +52,15 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $repository = new EmpleadoEloquentRepo();
-        $buscarEmpleados = new BuscarEmpleadosCU($repository);
-        $empleados = $buscarEmpleados();
+        try {
+            $repository = new EmpleadoEloquentRepo();
+            $buscarEmpleados = new BuscarEmpleadosCU($repository);
+            $empleados = $buscarEmpleados();
 
-        return response()->json($empleados, 200);
+            return response()->json($empleados, 200);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**
