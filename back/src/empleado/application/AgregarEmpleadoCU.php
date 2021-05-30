@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Src\empleado\application;
 
+use Src\empleado\domain\contracts\IEmpleadosRepository;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\empleado\domain\validator\ApellidoHandler;
 use Src\empleado\domain\validator\EmailHandler;
@@ -13,9 +14,11 @@ use Src\empleado\infrastructure\EmpleadoEloquentRepo;
 
 final class AgregarEmpleadoCU
 {
+    private $repository;
 
-    public function __construct()
+    public function __construct(IEmpleadosRepository $iEmpleadosRepository)
     {
+        $this->repository = $iEmpleadosRepository;
     }
 
     public function __invoke(EmpleadoEntity $empleadoEntity): void
@@ -30,7 +33,6 @@ final class AgregarEmpleadoCU
             ->setNext($emailHandler)
             ->handle($empleadoEntity);
 
-        $empleadoEloquentRepo = new EmpleadoEloquentRepo();
-        $empleadoEloquentRepo->store($empleadoEntity);
+        $this->repository->store($empleadoEntity);
     }
 }
