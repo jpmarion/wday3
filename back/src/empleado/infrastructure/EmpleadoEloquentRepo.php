@@ -43,9 +43,9 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
         return $empleadoCollection;
     }
 
-    public function store(EmpleadoEntity $empleado): void
+    public function store(EmpleadoEntity $empleado): int
     {
-
+        $empleadoId = 0;
         $empleadoFind = User::where('email', $empleado->getEmail())->first();
         if (!empty($empleadoFind)) {
             $empleadoFind->apellido = $empleado->getApellido();
@@ -62,12 +62,15 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
             $empleadoStore->email = $empleado->getEmail();
             $empleadoStore->password = bcrypt($empleado->getApellido());
             $empleadoStore->activation_token = bcrypt($empleado->getEmail());
-            $empleadoStore->user_id = $empleado->getUserId();            
+            $empleadoStore->user_id = $empleado->getUserId();
             $empleadoStore->save();
 
             $role = Role::find(self::EMPLEADO);
             $empleadoStore->roles()->save($role);
+
+            $empleadoId = $empleadoStore->id;
         }
+        return $empleadoId;
     }
 
     public function show(int $id): EmpleadoEntity

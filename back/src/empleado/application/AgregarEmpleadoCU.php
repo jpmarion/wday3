@@ -11,6 +11,7 @@ use Src\empleado\domain\validator\EmailHandler;
 use Src\empleado\domain\validator\NombreHandler;
 use Src\empleado\domain\validator\UserIdHandler;
 use Src\empleado\infrastructure\EmpleadoEloquentRepo;
+use Src\empleado\infrastructure\EmpleadoEmailLaravel;
 
 final class AgregarEmpleadoCU
 {
@@ -33,6 +34,10 @@ final class AgregarEmpleadoCU
             ->setNext($emailHandler)
             ->handle($empleadoEntity);
 
-        $this->repository->store($empleadoEntity);
+        $empleadoId =  $this->repository->store($empleadoEntity);
+        if ($empleadoId != 0) {
+            $empleadoMail = new EmpleadoEmailLaravel();
+            $empleadoMail($empleadoId);
+        }
     }
 }
