@@ -10,6 +10,7 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
+      { path: '', component: EmpleadosComponent, outlet: 'principalbar' },
       { path: 'empleados', component: EmpleadosComponent, outlet: 'principalbar' }
     ]
   }

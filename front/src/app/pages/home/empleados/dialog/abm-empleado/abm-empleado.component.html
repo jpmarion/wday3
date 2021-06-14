@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <div [ngSwitch]="data.abm">
+        <div *ngSwitchCase="abm.alta">
+          {{ 'FORMEMPLEADOABM.matCardTitleAlta' | translate }}
+        </div>
+        <div *ngSwitchCase="abm.baja">
+          {{ 'FORMEMPLEADOABM.matCardTitleBaja' | translate }}
+        </div>
+        <div *ngSwitchCase="abm.modificacion">
+          {{ 'FORMEMPLEADOABM.matCardTitleModificacion' | translate }}
+        </div>
+        <div *ngSwitchDefault>
+          {{ 'FORMEMPLEADOABM.matCardTitleConsulta' | translate }}
+        </div>
+      </div>
+    </mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="empleadoABM" (ngSubmit)="onSubmit()">
+    <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'FORMEMPLEADOABM.lblApellido' | translate }}</mat-label>
+        <input type="text" matInput name="" id="" formControlName="apellido">
+        <mat-error *ngIf="this.empleadoABM.get('apellido')?.invalid">{{ getMensajeErrorApellido() | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'FORMEMPLEADOABM.lblNombre' | translate }}</mat-label>
+        <input type="text" matInput name="" id="" formControlName="nombre">
+        <mat-error *ngIf="this.empleadoABM.get('nombre')?.invalid">{{ getMensajeErrorNombre() | translate }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>{{ 'FORMEMPLEADOABM.lblEmail' | translate }}</mat-label>
+        <input type="email" matInput name="" id="" formControlName="email">
+        <mat-error *ngIf="this.empleadoABM.get('email')?.invalid">{{ getMensajeErrorEmail() | translate }}</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <div class="button-row">
+        <button mat-flat-button color="accent" [disabled]="!empleadoABM.valid">
+          {{ 'FORMEMPLEADOABM.btnAceptar' | translate }}
+          <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
+        </button>
+        <button mat-flat-button mat-dialog-close color="warn">
+          {{ 'FORMEMPLEADOABM.btnSalir' | translate }}
+          <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
+        </button>
+      </div>
+    </mat-card-actions>
+  </form>
+</mat-card>

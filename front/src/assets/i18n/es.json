@@ -31,5 +31,29 @@
   "FORMSINO": {
     "btnSi": "Si",
     "btnNo": "No"
+  },
+  "FORMAGREGAREMPLEADO": {
+    "lblApellido": "Apellido",
+    "errorApellidoRequired": "Debe ingresar un valor",
+    "lblNombre": "Nombre",
+    "errorNombreRequired": "Debe ingresar un valor"
+  },
+  "FORMEMPLEADOABM": {
+    "errorABM": "Empleado existente",
+    "lblApellido": "Apellido",
+    "lblNombre": "Nombre",
+    "lblEmail": "Email",
+    "errorApellidoRequired": "Debe ingresar un valor",
+    "errorApellidoMaxLength": "El apellido no puede superar los 255 caracteres",
+    "errorNombreRequired": "Debe ingresar un valor",
+    "errorNombreMaxLength": "El nombre no puede superar los 255 caracteres",
+    "errorEmailRequired": "Debe ingresar un valor",
+    "errorEmailEmail": "No es un email valido",
+    "btnAceptar": "Aceptar",
+    "btnSalir": "Salir",
+    "matCardTitleAlta": "Alta empleado",
+    "matCardTitleBaja": "Baja empleado",
+    "matCardTitleModificacion": "Modificar empleado",
+    "matCardTitleConsulta": "Consultar empleado"
   }
 }

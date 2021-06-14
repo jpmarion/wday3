@@ -12,24 +12,17 @@ export class HttpHandlerErrorService {
   constructor() { }
 
   createHandleError = (serviceName = '') => <T>
-    (operation = 'operation', result = {} as T) => this.handleError(serviceName, operation, result)
-
+    (operation = 'operation', result = {} as T) =>
+    this.handleError(serviceName, operation, result)
   handleError<T>(serviceName = '', operation = 'operation', result = {} as T) {
-
     return (response: HttpErrorResponse): Observable<T> => {
-      // Optionally send the error to a third part error logging service
-      console.error(response);
-
-      // Show a simple alert if error
-      const message = (response.error instanceof ErrorEvent) ?
+      console.log(response);
+      const message = (response.error instanceof ErrorEvent ?
         response.error.message :
-        `server returned code ${response.status} with body "${response.error.error}"`;
-
-      // We are using alert just for example, on real world avoid this pratice
+        `server returned code ${response.status} whit body ${response.error.error}`
+      );
       alert(message);
-
-      // Keep running and returning a safe result.
       return of(result);
-    };
+    }
   }
 }
