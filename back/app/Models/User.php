@@ -34,7 +34,7 @@ class User extends Authenticatable
     const EMPLEADO = 2;
 
     protected $dates = ['deleted_at'];
-    protected $with = ['roles'];
+    // protected $with = ['roles'];
 
     /**
      * The attributes that are mass assignable.

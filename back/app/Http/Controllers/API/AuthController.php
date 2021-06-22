@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegistrarseRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Notifications\SignupActivate;
 use Illuminate\Support\Facades\Auth;
@@ -184,5 +185,42 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['msg' => 'Registro exitoso'], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/auth/user",
+     *      tags={"AuthController"},
+     *      summary="Datos del usuario",
+     *      operationId="userAuthController",
+     *      security={{"bearerAuth":{}}},
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Usuario",
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Solicitud no válida"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="No autorizado"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="No encontrado"
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Error validación"
+     *      )
+     *  )
+     */
+    public function user(Request $request)
+    {
+        // return response()->json($request->user());
+        return response()->json(new UserResource($request->user()));
     }
 }
