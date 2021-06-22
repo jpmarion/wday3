@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { OkDialogComponent } from 'src/app/pages/shared/dialog/ok-dialog/ok-dialog.component';
+import { EmpleadosService } from 'src/app/servicios/empleados.service';
+import { IEmpleadoServAgregar } from 'src/app/servicios/interfaces/IEmpleadoServAgregar';
 import { enumABM } from '../../../../../enum/enumABM';
 
 @Component({
@@ -21,14 +24,36 @@ export class AbmEmpleadoComponent implements OnInit {
   });
 
   constructor(
+    private empleadoService: EmpleadosService,
     public dialogRef: MatDialogRef<AbmEmpleadoComponent>,
+    private dialogOk: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit() { }
+  onSubmit() {
+    let agregarEmpleadoRequest: IEmpleadoServAgregar;
+    agregarEmpleadoRequest = {
+      idUser: Number(localStorage.getItem('idUser')?.toString()),
+      apellido: this.empleadoABM.get('apellido')?.value,
+      nombre: this.empleadoABM.get('nombre')?.value,
+      email: this.empleadoABM.get('email')?.value
+    };
+
+    this.empleadoService.onAgregar(agregarEmpleadoRequest)
+      .subscribe(
+        (response) => {
+          this.dialogRef.close();
+          this.openOkDialog("FORMEMPLEADOABM.tituloDialogOk", "FORMEMPLEADOABM.mensajeDialogOk");
+        }
+      )
+  }
+
+  cerrar() {
+    this.dialogRef.close();
+  }
 
   getMensajeErrorApellido(): string {
     var msj = '';
@@ -64,6 +89,12 @@ export class AbmEmpleadoComponent implements OnInit {
     }
 
     return msj;
+  }
+
+  openOkDialog(titulo: string, mensaje: string) {
+    const dialogRef = this.dialogOk.open(OkDialogComponent, {
+      data: { titulo: titulo, mensaje: mensaje }
+    })
   }
 
 }

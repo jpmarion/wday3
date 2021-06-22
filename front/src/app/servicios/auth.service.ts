@@ -26,7 +26,7 @@ export class AuthService {
   private registerUrl = this.apiUrl + '/auth/registrarse';
   private loginUrl = this.apiUrl + '/auth/login';
   private loguotUrl = this.apiUrl + '/auth/logout';
-  private meUrl = this.apiUrl + '/me';
+  private meUrl = this.apiUrl + '/auth/user';
 
   constructor(
     private http: HttpClient,
@@ -50,7 +50,8 @@ export class AuthService {
           const token: string = response['access_token'];
           if (token) {
             this.setToken(token);
-            // this.getUser().subscribe();
+            this.getUser().subscribe();
+            this.setIdUser(this.currentUser?.id!);
           }
           return response;
         }),
@@ -63,17 +64,26 @@ export class AuthService {
       .pipe(
         tap(() => {
           localStorage.removeItem('token');
+          localStorage.removeItem('idUser');
           this.router.navigate(['']);
         })
       );
   }
 
   setToken(token: string): void {
-    return localStorage.setItem('token', token);
+    localStorage.setItem('token', token);
   }
 
   getToken(): any {
     return localStorage.getItem('token');
+  }
+
+  setIdUser(id: number): void {
+    localStorage.setItem('idUser', id.toString());
+  }
+
+  getIdUser(): any {
+    return localStorage.getItem('iduser');
   }
 
   getUser(): Observable<User> {

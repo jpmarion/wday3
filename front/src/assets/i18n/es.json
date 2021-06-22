@@ -54,6 +54,8 @@
     "matCardTitleAlta": "Alta empleado",
     "matCardTitleBaja": "Baja empleado",
     "matCardTitleModificacion": "Modificar empleado",
-    "matCardTitleConsulta": "Consultar empleado"
+    "matCardTitleConsulta": "Consultar empleado",
+    "tituloDialogOk": "Empleado",
+    "mensajeDialogOk": "Empleado creado con exito"
   }
 }

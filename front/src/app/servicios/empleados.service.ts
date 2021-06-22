@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Empleado } from '../clases/empleado';
 import { HttpHandlerErrorService, HandleError } from '../../app/shared/services/http-handler-error.service';
+import { IEmpleadoServAgregar } from './interfaces/IEmpleadoServAgregar';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -28,6 +29,19 @@ export class EmpleadosService {
     private httpHandlerErrorService: HttpHandlerErrorService
   ) {
     this.handleError = httpHandlerErrorService.createHandleError('EmpleadosService');
+  }
+
+  onAgregar(agregar: IEmpleadoServAgregar): Observable<any> {
+    const request = JSON.stringify(
+      {
+        user_id: agregar.idUser,
+        apellido: agregar.apellido,
+        nombre: agregar.nombre,
+        email: agregar.email
+      }
+    );
+
+    return this.http.post(this.empleadosUrl, request, httpOptions);
   }
 
   getPersonas(): Observable<Empleado[]> {
