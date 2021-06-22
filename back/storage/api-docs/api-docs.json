@@ -119,6 +119,44 @@
                 ]
             }
         },
+        "/api/auth/user": {
+            "get": {
+                "tags": [
+                    "AuthController"
+                ],
+                "summary": "Datos del usuario",
+                "operationId": "userAuthController",
+                "responses": {
+                    "200": {
+                        "description": "Usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud no válida"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    },
+                    "404": {
+                        "description": "No encontrado"
+                    },
+                    "422": {
+                        "description": "Error validación"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/empleado": {
             "get": {
                 "tags": [
