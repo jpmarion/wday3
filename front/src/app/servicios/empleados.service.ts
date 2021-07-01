@@ -44,10 +44,17 @@ export class EmpleadosService {
     return this.http.post(this.empleadosUrl, request, httpOptions);
   }
 
-  getPersonas(): Observable<Empleado[]> {
+  getEmpleados(): Observable<Empleado[]> {
     return this.http.get<Empleado[]>(this.empleadosUrl)
       .pipe(
         catchError(this.handleError('getPersonas', []))
+      );
+  }
+
+  getEmpleado(id: number): Observable<Empleado | null> {
+    return this.http.get(this.empleadosUrl + `/${id}`)
+      .pipe(
+        catchError(this.handleError('getPersona', null))
       );
   }
 }

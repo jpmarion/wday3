@@ -37,7 +37,7 @@ export class EmpleadosComponent implements OnInit {
   }
 
   getEmpleados(): void {
-    this.empleadosServices.getPersonas()
+    this.empleadosServices.getEmpleados()
       .subscribe(
         response => {
           this.handleResponse(response);
@@ -58,13 +58,14 @@ export class EmpleadosComponent implements OnInit {
     console.error(error);
   }
 
-  openAbmEmpleado(abm: enumABM) {
+  openAbmEmpleado(abm: enumABM, idEmpleado?: number) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
-      abm: abm.toString()
+      abm: abm.toString(),
+      idEmpleado: (idEmpleado == null) ? 0 : idEmpleado
     };
     const dialogRef = this.abmEmpleadoDlg.open(AbmEmpleadoComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(

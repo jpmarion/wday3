@@ -38,11 +38,11 @@
     </mat-card-content>
     <mat-card-actions >
       <div class="button-row">
-        <button mat-flat-button color="accent" [disabled]="!empleadoABM.valid">
+        <button (click)="onSubmit()" *ngIf="!this.ocultarBotonAceptar" mat-flat-button color="accent" [disabled]="!empleadoABM.valid">
           {{ 'FORMEMPLEADOABM.btnAceptar' | translate }}
           <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
         </button>
-        <button mat-flat-button mat-dialog-close color="warn" (click)="cerrar()">
+        <button type="button" mat-flat-button mat-dialog-close color="warn" (click)="cerrar()">
           {{ 'FORMEMPLEADOABM.btnSalir' | translate }}
           <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
         </button>

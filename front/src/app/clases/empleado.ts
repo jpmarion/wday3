@@ -4,6 +4,4 @@ export class Empleado {
   apellido?: string;
   nombre?: string;
   email?: string;
-
-  constructor() { }
 }

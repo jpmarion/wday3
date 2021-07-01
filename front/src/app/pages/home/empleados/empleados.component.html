@@ -8,6 +8,11 @@
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> Id </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
   <!-- Position Column -->
   <ng-container matColumnDef="apellido">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
@@ -29,6 +34,9 @@
   <ng-container matColumnDef="bm">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
     <td mat-cell *matCellDef="let element">
+      <button mat-mini-fab color="primary" (click)="openAbmEmpleado(abm.consulta,element.id)">
+        <mat-icon>search</mat-icon>
+      </button>
       <button mat-mini-fab color="primary" (click)="openAbmEmpleado(abm.modificacion)">
         <mat-icon>update</mat-icon>
       </button>

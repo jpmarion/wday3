@@ -1,5 +1,6 @@
 export enum enumABM {
   alta,
   baja,
-  modificacion
+  modificacion,
+  consulta
 }
