@@ -6,10 +6,11 @@ namespace Src\usuario\infrastructure;
 
 use App\Models\Role;
 use App\Models\User;
+use Src\shared\EloquentRepo;
 use Src\usuario\domain\contracts\IUsuarioEntity;
 use Src\usuario\domain\contracts\IUsuarioRepository;
 
-final class UsuarioEloquentRepo implements IUsuarioRepository
+final class UsuarioEloquentRepo extends EloquentRepo implements IUsuarioRepository
 {
     public function __construct()
     {

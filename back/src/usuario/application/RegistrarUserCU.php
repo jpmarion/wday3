@@ -32,8 +32,15 @@ final class RegistrarUserCU
             ->setNext($passwordHandler)
             ->handle($iUsuarioEntity);
 
-        $userId = $this->repository->store($iUsuarioEntity, self::ADMINISTRADOR);
-        $email = new UsuarioEmailLaravel();
-        $email($userId);
+        try {
+            $this->repository->BeginTransaction();
+            $userId = $this->repository->store($iUsuarioEntity, self::ADMINISTRADOR);
+            $email = new UsuarioEmailLaravel();
+            $email($userId);
+            $this->repository->CommitTransacction();
+        } catch (\Throwable $th) {
+            $this->repository->RollbackTransaction();
+            throw $th;
+        }
     }
 }
