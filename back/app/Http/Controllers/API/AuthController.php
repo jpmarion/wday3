@@ -7,7 +7,6 @@ use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegistrarseRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Notifications\SignupActivate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Src\usuario\application\RegistrarUserCU;
