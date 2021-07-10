@@ -11,6 +11,7 @@ use Src\empleado\application\AgregarEmpleadoCU;
 use Src\empleado\application\BuscarEmpleadoCU;
 use Src\empleado\application\ActualizarEmpleadoCU;
 use Src\empleado\application\BuscarEmpleadosCU;
+use Src\empleado\application\BuscarEmpleadoXIdUser;
 use Src\empleado\application\EliminarEmpleadoCU;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\empleado\infrastructure\EmpleadoEloquentRepo;
@@ -103,21 +104,21 @@ class EmpleadoController extends Controller
      */
     public function store(EmpleadoStoreRequest $request)
     {
-        // try {
-        $empleado = new EmpleadoEntity();
-        $empleado->setUserId($request->user_id);
-        $empleado->setApellido($request->apellido);
-        $empleado->setNombre($request->nombre);
-        $empleado->setEmail($request->email);
+        try {
+            $empleado = new EmpleadoEntity();
+            $empleado->setUserId($request->user_id);
+            $empleado->setApellido($request->apellido);
+            $empleado->setNombre($request->nombre);
+            $empleado->setEmail($request->email);
 
-        $repository = new EmpleadoEloquentRepo();
+            $repository = new EmpleadoEloquentRepo();
 
-        $agregarEmpleado = new AgregarEmpleadoCU($repository);
-        $agregarEmpleado($empleado);
-        return response()->json(['msg' => 'Empleado creado con exito'], 201);
-        // } catch (Exception $e) {
-        //     return response()->json(['msg' => $e->getMessage()], 422);
-        // }
+            $agregarEmpleado = new AgregarEmpleadoCU($repository);
+            $agregarEmpleado($empleado);
+            return response()->json(['msg' => 'Empleado creado con exito'], 201);
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**
@@ -174,6 +175,56 @@ class EmpleadoController extends Controller
         } catch (Exception $e) {
             return response()->json(['msg' => $e->getMessage()], 422);
         }
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/empleado/showIdUser/{idUser}",
+     *      tags={"EmpleadoController"},
+     *      summary="Buscar empleados por idUser",
+     *      operationId="empleadoShowIdUser",
+     *      security={{"bearerAuth":{}}},
+     *   @OA\Parameter(
+     *     name="idUser",
+     *     description="Id del usuario",
+     *     required=true,
+     *     in="path",
+     *       @OA\Schema(
+     *       type="integer"
+     *     )
+     *   ),
+     *  @OA\Response(
+     *      response=200,
+     *      description="Empleados",
+     *      @OA\MediaType(
+     *          mediaType="application/json",
+     *      )
+     *  ),
+     *  @OA\Response(
+     *      response=400,
+     *      description="Solicitud no válida"
+     *  ),
+     *  @OA\Response(
+     *      response=404,
+     *      description="No encontrado"
+     *  ),
+     *  @OA\Response(
+     *      response=422,
+     *      description="Error validación"
+     *  )
+     *)
+     */
+    public function showIdUser($idUser)
+    {
+        // try {
+            $repository = new EmpleadoEloquentRepo();
+            $buscarEmpleados = new BuscarEmpleadoXIdUser($repository);
+            $empleados = $buscarEmpleados($idUser);
+
+            return response()->json($empleados, 200);
+        // } catch (\Throwable $e) {
+        //     return response()->json(['msg' => $e->getMessage()], 422);
+        // }
     }
 
     /**

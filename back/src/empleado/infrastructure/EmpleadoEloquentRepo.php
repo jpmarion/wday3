@@ -32,7 +32,6 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
             $empleadoNew->setId($empleado->id);
             $empleadoNew->setApellido($empleado->apellido);
             $empleadoNew->setNombre($empleado->name);
-            $empleadoNew->setUserId($empleado->user_id);
             $empleadoNew->setEmail($empleado->email);
 
             $empleadoArrayObject->append($empleadoNew);
@@ -43,14 +42,16 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
         return $empleadoCollection;
     }
 
+
+
     public function store(EmpleadoEntity $empleado): int
     {
         $empleadoId = 0;
         $empleadoFind = User::where('email', $empleado->getEmail())->first();
         // print_r($empleadoFind->email);
-        if (!empty($empleadoFind->email)) {        
+        if (!empty($empleadoFind->email)) {
             $empleadoFind->apellido = $empleado->getApellido();
-            $empleadoFind->name = $empleado->getNombre();            
+            $empleadoFind->name = $empleado->getNombre();
             $empleadoFind->save();
 
             $role = Role::find(self::EMPLEADO);
@@ -61,7 +62,7 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
             $empleadoStore->name = $empleado->getNombre();
             $empleadoStore->email = $empleado->getEmail();
             $empleadoStore->password = bcrypt($empleado->getApellido());
-            $empleadoStore->activation_token = bcrypt($empleado->getEmail());            
+            $empleadoStore->activation_token = bcrypt($empleado->getEmail());
             $empleadoStore->save();
 
             $role = Role::find(self::EMPLEADO);
@@ -89,6 +90,29 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
         }
 
         return $empleado;
+    }
+
+    public function showXIdUser(int $idUser): EmpleadoCollection
+    {
+        $empleadoORM = User::whereHas('roles', function ($query) use ($idUser) {
+            $query->where('roles.id', self::EMPLEADO)
+                ->where('role_user.user_id', $idUser);
+        })->get();
+
+        $empleadoArrayObject = new ArrayObject();
+        foreach ($empleadoORM as $empleado) {
+            $empleadoNew = new EmpleadoEntity();
+            $empleadoNew->setId($empleado->id);
+            $empleadoNew->setApellido($empleado->apellido);
+            $empleadoNew->setNombre($empleado->name);
+            $empleadoNew->setEmail($empleado->email);
+
+            $empleadoArrayObject->append($empleadoNew);
+        }
+
+        $empleadoCollection = new EmpleadoCollection($empleadoArrayObject);
+
+        return $empleadoCollection;
     }
 
     public function update(EmpleadoEntity $empleado): void

@@ -32,16 +32,6 @@ final class EmpleadoEntity implements IEmpleadoEntity
         $this->id = $id;
     }
 
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(int $userId)
-    {
-        $this->userId = $userId;
-    }
-
     /**
      * Get the value of apellido
      */
@@ -101,8 +91,7 @@ final class EmpleadoEntity implements IEmpleadoEntity
     public function toArray()
     {
         return [
-            'id' => $this->getId(),
-            'user_id' => $this->getUserId(),
+            'id' => $this->getId(),            
             'apellido' => $this->getApellido(),
             'nombre' => $this->getNombre(),
             'email' => $this->getEmail()
