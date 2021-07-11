@@ -24,7 +24,13 @@ final class EliminarEmpleadoCU
 
         $IdHandler = new IdHandler();
         $IdHandler->handle($empleado);
-
-        $this->repository->delete($id);
+        try {
+            $this->repository->BeginTransaction();
+            $this->repository->delete($id);
+            $this->repository->CommitTransacction();
+        } catch (\Throwable $th) {
+            $this->repository->RollbackTransaction();
+            throw $th;
+        }
     }
 }

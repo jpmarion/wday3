@@ -10,8 +10,9 @@ use ArrayObject;
 use Src\empleado\domain\contracts\IEmpleadosRepository;
 use Src\empleado\domain\EmpleadoCollection;
 use Src\empleado\domain\EmpleadoEntity;
+use Src\shared\EloquentRepo;
 
-final class EmpleadoEloquentRepo implements IEmpleadosRepository
+final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepository
 {
     const EMPLEADO = 2;
 
