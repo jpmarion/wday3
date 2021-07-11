@@ -83,8 +83,7 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
             $empleado->setId($empleadoORM->id);
             $empleado->setApellido($empleadoORM->apellido);
             $empleado->setNombre($empleadoORM->name);
-            $empleado->setEmail($empleadoORM->email);
-            $empleado->setUserId($empleadoORM->user_id);
+            $empleado->setEmail($empleadoORM->email);            
         }
 
         return $empleado;

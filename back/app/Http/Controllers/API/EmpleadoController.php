@@ -216,15 +216,15 @@ class EmpleadoController extends Controller
      */
     public function showIdUser($idUser)
     {
-        // try {
+        try {
             $repository = new EmpleadoEloquentRepo();
             $buscarEmpleados = new BuscarEmpleadoXIdUser($repository);
             $empleados = $buscarEmpleados($idUser);
 
             return response()->json($empleados, 200);
-        // } catch (\Throwable $e) {
-        //     return response()->json(['msg' => $e->getMessage()], 422);
-        // }
+        } catch (\Throwable $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**
