@@ -33,10 +33,17 @@ final class AgregarEmpleadoCU
             ->setNext($emailHandler)
             ->handle($empleadoEntity);
 
-        $empleadoId =  $this->repository->store($empleadoEntity);
-        if ($empleadoId != 0) {
-            $empleadoMail = new EmpleadoEmailLaravel();
-            $empleadoMail($empleadoId);
+        try {
+            $this->repository->BeginTransaction();
+            $empleadoId =  $this->repository->store($empleadoEntity);
+            if ($empleadoId != 0) {
+                $empleadoMail = new EmpleadoEmailLaravel();
+                $empleadoMail($empleadoId);
+            }
+            $this->repository->CommitTransacction();
+        } catch (\Throwable $th) {
+            $this->repository->RollbackTransaction();
+            throw $th;
         }
     }
 }

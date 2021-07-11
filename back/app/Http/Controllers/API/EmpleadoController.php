@@ -104,7 +104,7 @@ class EmpleadoController extends Controller
      */
     public function store(EmpleadoStoreRequest $request)
     {
-        // try {
+        try {
             $empleado = new EmpleadoEntity();
             $empleado->setUserId($request->user_id);
             $empleado->setApellido($request->apellido);
@@ -116,9 +116,9 @@ class EmpleadoController extends Controller
             $agregarEmpleado = new AgregarEmpleadoCU($repository);
             $agregarEmpleado($empleado);
             return response()->json(['msg' => 'Empleado creado con exito'], 201);
-        // } catch (Exception $e) {
-        //     return response()->json(['msg' => $e->getMessage()], 422);
-        // }
+        } catch (Exception $e) {
+            return response()->json(['msg' => $e->getMessage()], 422);
+        }
     }
 
     /**
