@@ -94,7 +94,7 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
     {
         $empleadoORM = User::whereHas('roles', function ($query) use ($idUser) {
             $query->where('roles.id', self::EMPLEADO)
-                ->where('role_user.user_id', $idUser);
+                ->where('role_user.user_id_empresa', $idUser);
         })->get();
 
         $empleadoArrayObject = new ArrayObject();
