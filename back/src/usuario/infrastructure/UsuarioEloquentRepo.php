@@ -25,9 +25,10 @@ final class UsuarioEloquentRepo extends EloquentRepo implements IUsuarioReposito
             'activation_token' => bcrypt($iUsuarioEntity->getEmail())
         ]);
 
-        $role = Role::findOrFail($idRole);        
+        $role = Role::findOrFail($idRole);
+        $user->save();        
+        $user->roles()->attach($role, ['user_id_empresa' => $user->id]);
         $user->save();
-        $user->roles()->save($role);
 
         return $user->id;
     }

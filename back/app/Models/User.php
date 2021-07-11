@@ -70,14 +70,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function empleados()
-    {
-        return $this->hasMany(Empleado::class);
-    }
-
     public function roles()
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->belongsToMany(Role::class)->withPivot('user_id_empresa')->withTimestamps();
     }
 
     public function esAdmin(): bool

@@ -22,12 +22,9 @@ class Empleado extends Model
 {
     use HasFactory;
 
-    protected $table = 'empleados';
-    protected $primaryKey = 'id';
-    protected $fillable = ['user_id', 'apellido', 'nombre'];
-    protected $with = ['user'];
+    protected $table = 'users';
 
-    public function user()
+    public function users()
     {
         return $this->belongsTo(User::class);
     }

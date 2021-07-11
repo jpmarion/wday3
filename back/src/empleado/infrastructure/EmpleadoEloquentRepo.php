@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Src\empleado\infrastructure;
 
-use App\Models\Empleado;
 use App\Models\Role;
 use App\Models\User;
 use ArrayObject;
