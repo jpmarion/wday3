@@ -47,25 +47,24 @@ final class EmpleadoEloquentRepo implements IEmpleadosRepository
     {
         $empleadoId = 0;
         $empleadoFind = User::where('email', $empleado->getEmail())->first();
-        // print_r($empleadoFind->email);
         if (!empty($empleadoFind->email)) {
             $empleadoFind->apellido = $empleado->getApellido();
             $empleadoFind->name = $empleado->getNombre();
-            $empleadoFind->save();
-
             $role = Role::find(self::EMPLEADO);
-            $empleadoFind->roles()->save($role);
+            $empleadoFind->roles()->attach($role, ['user_id_empresa' => $empleado->getUserId()]);
+            $empleadoFind->save();
         } else {
             $empleadoStore = new User();
             $empleadoStore->apellido = $empleado->getApellido();
             $empleadoStore->name = $empleado->getNombre();
             $empleadoStore->email = $empleado->getEmail();
             $empleadoStore->password = bcrypt($empleado->getApellido());
-            $empleadoStore->activation_token = bcrypt($empleado->getEmail());
+            $empleadoStore->activation_token = bcrypt($empleado->getEmail());            
             $empleadoStore->save();
 
             $role = Role::find(self::EMPLEADO);
-            $empleadoStore->roles()->save($role);
+            $empleadoStore->roles()->attach($role, ['user_id_empresa' => $empleado->getUserId()]);
+            $empleadoStore->save();
 
             $empleadoId = $empleadoStore->id;
         }

@@ -10,7 +10,6 @@ use Src\empleado\domain\validator\ApellidoHandler;
 use Src\empleado\domain\validator\EmailHandler;
 use Src\empleado\domain\validator\NombreHandler;
 use Src\empleado\domain\validator\UserIdHandler;
-use Src\empleado\infrastructure\EmpleadoEloquentRepo;
 use Src\empleado\infrastructure\EmpleadoEmailLaravel;
 
 final class AgregarEmpleadoCU
