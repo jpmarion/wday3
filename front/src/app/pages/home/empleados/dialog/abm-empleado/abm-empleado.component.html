@@ -21,24 +21,25 @@
     <mat-card-content>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'FORMEMPLEADOABM.lblApellido' | translate }}</mat-label>
-        <input type="text" matInput name="" id="" formControlName="apellido">
+        <input type="text" matInput name="" id="" formControlName="apellido" [readonly]="this.readonlyInput">
         <mat-error *ngIf="this.empleadoABM.get('apellido')?.invalid">{{ getMensajeErrorApellido() | translate }}
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'FORMEMPLEADOABM.lblNombre' | translate }}</mat-label>
-        <input type="text" matInput name="" id="" formControlName="nombre">
+        <input type="text" matInput name="" id="" formControlName="nombre" [readonly]="this.readonlyInput">
         <mat-error *ngIf="this.empleadoABM.get('nombre')?.invalid">{{ getMensajeErrorNombre() | translate }}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'FORMEMPLEADOABM.lblEmail' | translate }}</mat-label>
-        <input type="email" matInput name="" id="" formControlName="email">
+        <input type="email" matInput name="" id="" formControlName="email" [readonly]="this.readonlyInput">
         <mat-error *ngIf="this.empleadoABM.get('email')?.invalid">{{ getMensajeErrorEmail() | translate }}</mat-error>
       </mat-form-field>
     </mat-card-content>
-    <mat-card-actions >
+    <mat-card-actions>
       <div class="button-row">
-        <button (click)="onSubmit()" *ngIf="!this.ocultarBotonAceptar" mat-flat-button color="accent" [disabled]="!empleadoABM.valid">
+        <button (click)="onSubmit()" *ngIf="!this.ocultarBotonAceptar" mat-flat-button color="accent"
+          [disabled]="!empleadoABM.valid ">
           {{ 'FORMEMPLEADOABM.btnAceptar' | translate }}
           <!-- <mat-spinner mode="indeterminate" [color]="color" diameter="20"></mat-spinner> -->
         </button>

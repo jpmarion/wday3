@@ -91,7 +91,7 @@ final class EmpleadoEntity implements IEmpleadoEntity
     public function toArray()
     {
         return [
-            'id' => $this->getId(),            
+            'id' => $this->getId(),
             'apellido' => $this->getApellido(),
             'nombre' => $this->getNombre(),
             'email' => $this->getEmail()
@@ -100,8 +100,8 @@ final class EmpleadoEntity implements IEmpleadoEntity
 
     /**
      * Get the value of userId
-     */ 
-    public function getUserId()
+     */
+    public function getUserId(): int
     {
         return $this->userId;
     }
@@ -110,8 +110,8 @@ final class EmpleadoEntity implements IEmpleadoEntity
      * Set the value of userId
      *
      * @return  self
-     */ 
-    public function setUserId($userId)
+     */
+    public function setUserId(int $userId)
     {
         $this->userId = $userId;
 

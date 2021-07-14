@@ -12,4 +12,6 @@ interface IEmpleadoEntity
     public function setNombre(string $nombre);
     public function getEmail():string;
     public function setEmail(string $email);    
+    public function getUserId():int;
+    public function setUserId(int $userId);
 }

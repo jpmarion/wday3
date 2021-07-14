@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Empleado } from '../clases/empleado';
 import { HttpHandlerErrorService, HandleError } from '../../app/shared/services/http-handler-error.service';
 import { IEmpleadoServAgregar } from './interfaces/IEmpleadoServAgregar';
+import { IEmpleadoServModificar } from './interfaces/IEmpleadoServModificar';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -42,6 +43,22 @@ export class EmpleadosService {
     );
 
     return this.http.post(this.empleadosUrl, request, httpOptions);
+  }
+
+  onModificar(modificar: IEmpleadoServModificar): Observable<any> {
+    const request = JSON.stringify(
+      {
+        id: modificar.id,
+        nombre: modificar.nombre,
+        apellido: modificar.apellido
+      }
+    );
+    return this.http.put(this.empleadosUrl, request, httpOptions);
+  }
+
+  onEliminar(id: number): Observable<any> {
+
+    return this.http.delete(this.empleadosUrl + `/${id}`, httpOptions);
   }
 
   getEmpleados(): Observable<Empleado[]> {

@@ -6,6 +6,7 @@ import { Empleado } from 'src/app/clases/empleado';
 import { OkDialogComponent } from 'src/app/pages/shared/dialog/ok-dialog/ok-dialog.component';
 import { EmpleadosService } from 'src/app/servicios/empleados.service';
 import { IEmpleadoServAgregar } from 'src/app/servicios/interfaces/IEmpleadoServAgregar';
+import { IEmpleadoServModificar } from 'src/app/servicios/interfaces/IEmpleadoServModificar';
 import { enumABM } from '../../../../../enum/enumABM';
 
 @Component({
@@ -18,6 +19,7 @@ export class AbmEmpleadoComponent implements OnInit {
   abm = enumABM;
   private matCardTitle: string = '';
   ocultarBotonAceptar: boolean = false;
+  readonlyInput: boolean = false;
   empleado!: Empleado | null;
 
 
@@ -38,11 +40,16 @@ export class AbmEmpleadoComponent implements OnInit {
   ngOnInit(): void {
     switch (Number.parseInt(this.data.abm)) {
       case this.abm.consulta:
-        this.DeshabilitarInput();
+        this.readonlyInput = true;
         this.CargarEmpleado();
+        this.ocultarBotonAceptar = true;
         break;
       case this.abm.baja:
-        this.DeshabilitarInput();
+        this.readonlyInput = true;
+        this.CargarEmpleado();
+        break;
+      case this.abm.modificacion:
+        this.CargarEmpleado();
         break;
       default:
         break;
@@ -50,6 +57,48 @@ export class AbmEmpleadoComponent implements OnInit {
   }
 
   onSubmit() {
+    switch (Number.parseInt(this.data.abm)) {
+      case this.abm.alta:
+        this.agregarEmpleado();
+        break;
+      case this.abm.baja:
+        this.EliminarEmpleado();
+        break;
+      case this.abm.modificacion:
+        this.modificarEmpleado();
+        break;
+      default:
+        break;
+    }
+  }
+  EliminarEmpleado() {
+    this.empleadoService.onEliminar(this.data.idEmpleado)
+    .subscribe(
+      (response)=>{
+        this.dialogRef.close();
+        this.openOkDialog("FORMEMPLEADOABM.tituloDialogOk", "FORMEMPLEADOABM.mensajeDialogOk");
+      }
+    );
+  }
+
+  modificarEmpleado() {
+    let modificarEmpledoRequest: IEmpleadoServModificar;
+    modificarEmpledoRequest = {
+      id: this.data.idEmpleado,
+      apellido: this.empleadoABM.get('apellido')?.value,
+      nombre: this.empleadoABM.get('nombre')?.value,
+      email: this.empleadoABM.get('email')?.value
+    };
+    this.empleadoService.onModificar(modificarEmpledoRequest)
+      .subscribe(
+        (response) => {
+          this.dialogRef.close();
+          this.openOkDialog("FORMEMPLEADOABM.tituloDialogOk", "FORMEMPLEADOABM.mensajeDialogOk");
+        }
+      );
+  }
+
+  agregarEmpleado() {
     let agregarEmpleadoRequest: IEmpleadoServAgregar;
     agregarEmpleadoRequest = {
       idUser: Number(localStorage.getItem('idUser')?.toString()),
@@ -64,17 +113,11 @@ export class AbmEmpleadoComponent implements OnInit {
           this.dialogRef.close();
           this.openOkDialog("FORMEMPLEADOABM.tituloDialogOk", "FORMEMPLEADOABM.mensajeDialogOk");
         }
-      )
+      );
   }
 
   cerrar() {
     this.dialogRef.close();
-  }
-
-  DeshabilitarInput(): void {
-    this.empleadoABM.get('apellido')?.disable();
-    this.empleadoABM.get('nombre')?.disable();
-    this.empleadoABM.get('email')?.disable();
   }
 
   CargarEmpleado(): void {

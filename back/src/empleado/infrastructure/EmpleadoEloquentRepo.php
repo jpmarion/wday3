@@ -60,7 +60,7 @@ final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepos
             $empleadoStore->name = $empleado->getNombre();
             $empleadoStore->email = $empleado->getEmail();
             $empleadoStore->password = bcrypt($empleado->getApellido());
-            $empleadoStore->activation_token = bcrypt($empleado->getEmail());            
+            $empleadoStore->activation_token = bcrypt($empleado->getEmail());
             $empleadoStore->save();
 
             $role = Role::find(self::EMPLEADO);
@@ -84,7 +84,7 @@ final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepos
             $empleado->setId($empleadoORM->id);
             $empleado->setApellido($empleadoORM->apellido);
             $empleado->setNombre($empleadoORM->name);
-            $empleado->setEmail($empleadoORM->email);            
+            $empleado->setEmail($empleadoORM->email);
         }
 
         return $empleado;
@@ -136,5 +136,25 @@ final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepos
         })->firstOrFail();
 
         $empleadoDelete->roles()->detach(self::EMPLEADO);
+    }
+
+    public function ExisteUsuarioRole(string $email, int $userIdEmpresa): bool
+    {
+        $resultado = false;
+        $empleadoORM = User::find('email',$email);
+
+
+        $empleadoORM = User::whereHas('roles', function ($query) use ($email, $userIdEmpresa) {
+            $query->where('roles.id', self::EMPLEADO)
+                ->where('role_user', $userIdEmpresa);
+        })->where('users.email', $email)->get();
+
+        if ($empleadoORM) {
+            $resultado = true;
+        }
+
+        print_r($resultado);
+
+        return $resultado;
     }
 }
