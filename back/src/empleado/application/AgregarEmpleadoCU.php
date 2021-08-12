@@ -15,7 +15,7 @@ use Src\empleado\infrastructure\EmpleadoEmailLaravel;
 
 final class AgregarEmpleadoCU
 {
-    private $repository;
+    private IEmpleadosRepository $repository;
 
     public function __construct(IEmpleadosRepository $iEmpleadosRepository)
     {
@@ -37,13 +37,13 @@ final class AgregarEmpleadoCU
             ->handle($empleadoEntity);
 
         try {
-            // $this->repository->BeginTransaction();
-            // $empleadoId =  $this->repository->store($empleadoEntity);
-            // if ($empleadoId != 0) {
-            //     $empleadoMail = new EmpleadoEmailLaravel();
-            //     $empleadoMail($empleadoId);
-            // }
-            // $this->repository->CommitTransacction();
+            $this->repository->BeginTransaction();
+            $empleadoId =  $this->repository->store($empleadoEntity);
+            if ($empleadoId != 0) {
+                $empleadoMail = new EmpleadoEmailLaravel();
+                $empleadoMail($empleadoId);
+            }
+            $this->repository->CommitTransacction();
         } catch (\Throwable $th) {
             $this->repository->RollbackTransaction();
             throw $th;

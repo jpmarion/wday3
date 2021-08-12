@@ -53,7 +53,7 @@ class EmpleadoControllerTest extends TestCase
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $access_token
         ])->postJson('/api/empleado', $data);
-        $response->assertStatus(201);
+            $response->assertStatus(201);
     }
 
     /**

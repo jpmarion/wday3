@@ -11,6 +11,7 @@ use Src\empleado\domain\contracts\IEmpleadosRepository;
 use Src\empleado\domain\EmpleadoCollection;
 use Src\empleado\domain\EmpleadoEntity;
 use Src\shared\EloquentRepo;
+use Illuminate\Support\Facades\DB;
 
 final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepository
 {
@@ -141,20 +142,18 @@ final class EmpleadoEloquentRepo extends EloquentRepo implements IEmpleadosRepos
     public function ExisteUsuarioRole(string $email, int $userIdEmpresa): bool
     {
         $resultado = false;
-        $empleadoORM = User::find('email',$email);
 
+        $empleadoORM = DB::table('users')
+            ->join('role_user', 'users.id', '=', 'role_user.user_id')
+            ->join('roles', 'roles.id', '=', 'role_user.role_id')
+            ->where('users.email', '=', $email)
+            ->where('roles.id', '=', self::EMPLEADO)
+            ->where('user_id_empresa', '=', $userIdEmpresa)
+            ->get();
 
-        $empleadoORM = User::whereHas('roles', function ($query) use ($email, $userIdEmpresa) {
-            $query->where('roles.id', self::EMPLEADO)
-                ->where('role_user', $userIdEmpresa);
-        })->where('users.email', $email)->get();
-
-        if ($empleadoORM) {
+        if (!$empleadoORM->isEmpty()) {
             $resultado = true;
         }
-
-        print_r($resultado);
-
         return $resultado;
     }
 }
